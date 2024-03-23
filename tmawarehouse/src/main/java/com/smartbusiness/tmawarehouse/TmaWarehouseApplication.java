@@ -4,10 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TmawarehouseApplication {
+
+public class TmaWarehouseApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TmawarehouseApplication.class, args);
+		SpringApplication.run(TmaWarehouseApplication.class, args);
 	}
 
 }
