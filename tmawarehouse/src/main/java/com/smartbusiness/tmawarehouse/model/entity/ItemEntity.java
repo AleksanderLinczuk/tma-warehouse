@@ -18,10 +18,13 @@ public class ItemEntity {
     @Column(name = "item_id")
     private Long itemId;
 
-    @Column(name = "item_group")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "item_group", columnDefinition = "varchar")
     private ItemGroup itemGroup;
 
-    @Column(name = "unit_of_measurement")
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unit_of_measurement", columnDefinition = "varchar")
     private UnitOfMeasurement unitOfMeasurement;
 
     private int quantity;

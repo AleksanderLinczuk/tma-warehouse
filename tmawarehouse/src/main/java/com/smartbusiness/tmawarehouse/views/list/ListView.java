@@ -2,6 +2,7 @@ package com.smartbusiness.tmawarehouse.views.list;
 
 
 import com.smartbusiness.tmawarehouse.model.entity.ItemEntity;
+import com.smartbusiness.tmawarehouse.service.ItemService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,9 +19,14 @@ public class ListView extends VerticalLayout {
     Grid<ItemEntity> grid = new Grid<>(ItemEntity.class);
     TextField filterText = new TextField();
     ItemForm itemForm;
+    private ItemService itemService;
 
 
-    public ListView() {
+
+
+
+    public ListView(ItemService itemService) {
+        this.itemService = itemService;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
@@ -28,6 +34,12 @@ public class ListView extends VerticalLayout {
 
 
         add(getToolbar(), getContent());
+        
+        updateList();
+    }
+
+    private void updateList() {
+        grid.setItems(itemService.findAllItems(filterText.getValue()));
     }
 
     private Component getContent() {
@@ -55,8 +67,9 @@ public class ListView extends VerticalLayout {
         filterText.setPlaceholder("Filter by item group...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
+        filterText.addValueChangeListener(change -> updateList());
 
-        Button addItemButton = new Button("Add item");
+        Button addItemButton = new Button("Filter by item group");
 
         var toolbar = new HorizontalLayout(filterText, addItemButton);
         toolbar.addClassName("toolbar");

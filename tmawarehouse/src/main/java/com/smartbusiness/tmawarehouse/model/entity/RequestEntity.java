@@ -24,7 +24,8 @@ public class RequestEntity {
     @JoinColumn(name = "item_id")
     private ItemEntity itemEntity;
 
-    @Column(name = "unit_of_measurement")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "unit_of_measurement", columnDefinition = "varchar")
     private UnitOfMeasurement unitOfMeasurement;
 
     private int quantity;

@@ -31,6 +31,8 @@ public class ItemForm extends FormLayout {
     public ItemForm() {
         addClassName("item-form");
 
+        itemGroup.setItems(ItemGroup.values());
+        unitOfMeasurement.setItems(UnitOfMeasurement.values());
 
         add(
                 itemGroup,
