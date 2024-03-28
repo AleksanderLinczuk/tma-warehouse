@@ -23,6 +23,10 @@ public class ItemService {
         }
     }
 
+    public long countItems(){
+        return itemRepository.count();
+    }
+
 
     public void deleteItem(ItemEntity itemEntity){
         itemRepository.delete(itemEntity);
@@ -30,9 +34,18 @@ public class ItemService {
 
     public void saveItem(ItemEntity itemEntity){
         if (itemEntity == null){
+
+            System.err.println("Item is null.");
             return;
         }else{
             itemRepository.save(itemEntity);
         }
     }
+
+    public List<ItemEntity> findAllItems(){
+        return itemRepository.findAll();
+    }
+
+
+
 }
