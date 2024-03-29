@@ -79,7 +79,8 @@ public class RequestListView extends VerticalLayout {
 
     private void acceptRequest(RequestForm.AcceptEvent acceptEvent) {
         if(itemService.canUpdateQuantity(acceptEvent.getRequest())){
-            itemService.updateQuantity(acceptEvent.getRequest(),122);
+            requestService.updateRequestStatus(acceptEvent.getRequest(), "ACCEPTED");
+            Notification.show("Request accepted!");
             updateList();
             closeEditor();
         }
@@ -88,7 +89,8 @@ public class RequestListView extends VerticalLayout {
     }
 
     private void rejectRequest(RequestForm.DeleteEvent deleteEvent) {
-        requestService.deleteRequest(deleteEvent.getRequest());
+        requestService.updateRequestStatus(deleteEvent.getRequest(), "REJECTED");
+        Notification.show("Request rejected!");
         updateList();
         closeEditor();
     }
@@ -112,6 +114,7 @@ public class RequestListView extends VerticalLayout {
         grid.addColumn(RequestEntity::getQuantity).setHeader("Quantity").setSortable(true);
         grid.addColumn(RequestEntity::getPriceUAH).setHeader("Price UAH").setSortable(true);
         grid.addColumn(RequestEntity::getComment).setHeader("comment").setSortable(true);
+        grid.addColumn(RequestEntity::getStatus).setHeader("status").setSortable(true);
 
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));

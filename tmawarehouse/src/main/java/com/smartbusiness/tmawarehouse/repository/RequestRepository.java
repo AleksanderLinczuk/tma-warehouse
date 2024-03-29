@@ -1,6 +1,5 @@
 package com.smartbusiness.tmawarehouse.repository;
 
-import com.smartbusiness.tmawarehouse.model.entity.ItemEntity;
 import com.smartbusiness.tmawarehouse.model.entity.RequestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
