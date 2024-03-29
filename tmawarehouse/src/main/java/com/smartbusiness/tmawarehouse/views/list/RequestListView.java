@@ -19,7 +19,6 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@org.springframework.stereotype.Component
 @Route(value="request", layout = MainLayout.class)
 @PageTitle("Request List")
 
@@ -79,13 +78,16 @@ public class RequestListView extends VerticalLayout {
 
     private void acceptRequest(RequestForm.AcceptEvent acceptEvent) {
         if(itemService.canUpdateQuantity(acceptEvent.getRequest())){
+            itemService.updateQuantity(acceptEvent.getRequest());
             requestService.updateRequestStatus(acceptEvent.getRequest(), "ACCEPTED");
             Notification.show("Request accepted!");
             updateList();
             closeEditor();
+        }else{
+            Notification.show("Request quantity is too high, can not update!");
+            closeEditor();
         }
-        Notification.show("Request quantity is too high, can not update!");
-        closeEditor();
+
     }
 
     private void rejectRequest(RequestForm.DeleteEvent deleteEvent) {

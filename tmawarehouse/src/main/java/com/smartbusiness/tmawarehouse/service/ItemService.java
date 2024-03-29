@@ -33,7 +33,7 @@ public class ItemService {
     }
 
 
-    public ItemEntity updateQuantity(RequestEntity request, int quantity) {
+    public ItemEntity updateQuantity(RequestEntity request) {
         Long itemId = request.getItemEntity().getItemId();
         Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
         if (optionalItem.isPresent()) {

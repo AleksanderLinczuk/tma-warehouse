@@ -20,14 +20,13 @@ import com.vaadin.flow.router.Route;
 
 public class ItemListView extends VerticalLayout {
 
-    Grid<RequestEntity> requestGrid = new Grid<>(RequestEntity.class);
     Grid<ItemEntity> grid = new Grid<>(ItemEntity.class);
     TextField filterText = new TextField();
     ItemForm itemForm;
     private ItemService itemService;
 
 
-    public ItemListView(ItemService itemService, RequestListView requestListView, RequestForm requestForm) {
+    public ItemListView(ItemService itemService) {
         this.itemService = itemService;
 
         addClassName("list-view");
