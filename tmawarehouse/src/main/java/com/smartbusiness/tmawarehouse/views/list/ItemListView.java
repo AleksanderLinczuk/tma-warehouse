@@ -2,7 +2,9 @@ package com.smartbusiness.tmawarehouse.views.list;
 
 
 import com.smartbusiness.tmawarehouse.model.entity.ItemEntity;
+import com.smartbusiness.tmawarehouse.model.entity.RequestEntity;
 import com.smartbusiness.tmawarehouse.service.ItemService;
+import com.smartbusiness.tmawarehouse.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -13,29 +15,30 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+@Route(value = "", layout = MainLayout.class)
 @PageTitle("TMA warehouse")
-@Route(value = "")
-public class ListView extends VerticalLayout {
+
+public class ItemListView extends VerticalLayout {
+
+    Grid<RequestEntity> requestGrid = new Grid<>(RequestEntity.class);
     Grid<ItemEntity> grid = new Grid<>(ItemEntity.class);
     TextField filterText = new TextField();
     ItemForm itemForm;
     private ItemService itemService;
 
 
-    public ListView(ItemService itemService) {
+    public ItemListView(ItemService itemService, RequestListView requestListView, RequestForm requestForm) {
         this.itemService = itemService;
+
         addClassName("list-view");
         setSizeFull();
         configureGrid();
         configureItemForm();
 
 
-        add(
-                getToolbar(),
-                getContent()
-        );
-                updateList();
-                closeEditor();
+        add(getToolbar(), getContent());
+        updateList();
+        closeEditor();
     }
 
     private void closeEditor() {
@@ -63,7 +66,7 @@ public class ListView extends VerticalLayout {
 
         itemForm.addListener(ItemForm.SaveEvent.class, this::saveItem);
         itemForm.addListener(ItemForm.DeleteEvent.class, this::deleteItem);
-        itemForm.addListener(ItemForm.CloseEvent.class, e-> closeEditor());
+        itemForm.addListener(ItemForm.CloseEvent.class, e -> closeEditor());
     }
 
     private void deleteItem(ItemForm.DeleteEvent deleteEvent) {
@@ -83,7 +86,7 @@ public class ListView extends VerticalLayout {
         grid.setSizeFull();
         grid.addColumn(item -> item.getItemGroup().name()).setHeader("Item group");
         grid.addColumn(item -> item.getUnitOfMeasurement().name()).setHeader("Unit");
-        grid.setColumns("itemId","itemGroup","unitOfMeasurement","quantity", "priceUAH", "status", "storageLocation", "contactPerson");
+        grid.setColumns("itemId", "itemGroup", "unitOfMeasurement", "quantity", "priceUAH", "status", "storageLocation", "contactPerson");
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -91,9 +94,9 @@ public class ListView extends VerticalLayout {
     }
 
     private void editItem(ItemEntity item) {
-        if (item == null){
+        if (item == null) {
             closeEditor();
-        }else{
+        } else {
             itemForm.setItemEntity(item);
             itemForm.setVisible(true);
             addClassName("editing");
@@ -108,6 +111,7 @@ public class ListView extends VerticalLayout {
 
         Button addItemButton = new Button("Add item");
         addItemButton.addClickListener(e -> addItem());
+
 
         var toolbar = new HorizontalLayout(filterText, addItemButton);
         toolbar.addClassName("toolbar");

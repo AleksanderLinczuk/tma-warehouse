@@ -3,7 +3,6 @@ package com.smartbusiness.tmawarehouse.repository;
 import com.smartbusiness.tmawarehouse.model.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
