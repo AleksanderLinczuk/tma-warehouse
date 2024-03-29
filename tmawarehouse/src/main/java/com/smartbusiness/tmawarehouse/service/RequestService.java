@@ -1,10 +1,13 @@
 package com.smartbusiness.tmawarehouse.service;
 
+import com.smartbusiness.tmawarehouse.model.entity.ItemEntity;
 import com.smartbusiness.tmawarehouse.model.entity.RequestEntity;
 import com.smartbusiness.tmawarehouse.repository.RequestRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RequestService {
@@ -42,6 +45,19 @@ public class RequestService {
             requestRepository.save(requestEntity);
         }
     }
+
+    public RequestEntity updateRequestStatus(RequestEntity request, String text) {
+        Long requestId = request.getRequestId();
+        Optional<RequestEntity> optionalRequest = requestRepository.findById(requestId);
+        if (optionalRequest.isPresent()) {
+            RequestEntity foundRequest = optionalRequest.get();
+            foundRequest.setStatus(text);
+            return requestRepository.save(foundRequest);
+        } else {
+            throw new EntityNotFoundException("Request with id " + requestId + " not found");
+        }
+    }
+
 
     public List<RequestEntity> findAllRequests() {
         return requestRepository.findAll();

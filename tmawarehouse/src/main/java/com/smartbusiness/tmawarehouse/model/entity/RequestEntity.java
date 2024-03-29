@@ -36,4 +36,7 @@ public class RequestEntity {
     private String comment;
 
 
+    private String status = "NEW";
+
+
 }
